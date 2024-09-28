@@ -4,6 +4,7 @@
 .ce-toolbar__content {
     max-width: unset;
     background-color: transparent;
+    outline: none;
 }
 
 .ce-block--selected .ce-block__content,
@@ -30,7 +31,9 @@
 .cdx-block::selection {
     background: #000;
 }
-
+.ce-block__content::selection {
+    background-color: #000;
+}
 .ce-popover__items .ce-popover-item:hover,
 .ce-toolbar__plus:hover,
 .ce-popover-item__icon--tool:hover,
@@ -91,3 +94,7 @@
     background: #1a1a1a;
 }
 
+.ce-inline-tool-input--showed,
+.cdx-search-field__input{
+    color: #000;
+}

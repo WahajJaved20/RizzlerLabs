@@ -1,16 +1,32 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditorJS from '@editorjs/editorjs';
 import SimpleImage from "@editorjs/simple-image";
 import Checklist from '@editorjs/checklist'
 import List from "@editorjs/list";
 import InlineCode from '@editorjs/inline-code';
-import Title from "title-editorjs";
 import Alert from 'editorjs-alert';
 import CodeBox from '@bomdi/codebox';
 import DragDrop from "editorjs-drag-drop";
 import Undo from 'editorjs-undo';
 import "./Editor.css"
+import Header from "title-editorjs";
+ 
+const DEFAULT_INITIAL_DATA = () => {
+    return {
+      "time": new Date().getTime(),
+      "blocks": [
+        {
+            type: "header",
+            data: {
+                text: "write a header"
+            }
+        },
+      ]
+    }
+  }
+
 function Editor() {
+    const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
     useEffect(() => {
         if (ejInstance.current === null) {
             initializeEditor();
@@ -24,10 +40,14 @@ function Editor() {
     const handleReady = (editor) => {
         new DragDrop(editor);
         new Undo({ editor });
-      };
+    };
     const initializeEditor = () => {
         const editor = new EditorJS({
-
+            data: editorData,
+            onChange: async () => {
+                let content = await this.editor.saver.save();
+                setEditorData(content);
+              },
             onReady: handleReady,
             holder: 'editorjs',
             autofocus: true,
@@ -54,11 +74,11 @@ function Editor() {
                 codeBox: {
                     class: CodeBox,
                     config: {
-                      themeURL: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css', // Optional
-                      useDefaultTheme: 'light' // Optional. This also determines the background color of the language select drop-down
+                        themeURL: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css', 
+                        useDefaultTheme: 'dark'
                     }
-                  },
-                title: Title,
+                },
+                header: Header,
                 alert: {
                     class: Alert,
                     inlineToolbar: true,
@@ -81,7 +101,7 @@ function Editor() {
         });
     }
     const ejInstance = useRef();
-    return <><div id='editorjs' className="text-white"></div></>;
+    return <><div id='editorjs' className="font-Manrope bg-[#242424]"></div></>;
 
 }
 

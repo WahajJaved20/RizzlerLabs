@@ -14,7 +14,7 @@ function EditorialPage() {
             <p className="text-lg">
                 Ding dong
             </p>
-            <div className="bg-[#242424] w-full flex-1 resize-none rounded-xl m-16">
+            <div className=" w-[80%] rounded-xl m-8 max-h-auto min-h-56">
             <Editor />
             </div>
             
