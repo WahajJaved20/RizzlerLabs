@@ -8,24 +8,25 @@ import Alert from 'editorjs-alert';
 import CodeBox from '@bomdi/codebox';
 import DragDrop from "editorjs-drag-drop";
 import Undo from 'editorjs-undo';
+import LinkTool from "@editorjs/link"
 import "./Editor.css"
 import Header from "title-editorjs";
- 
+
 const DEFAULT_INITIAL_DATA = () => {
     return {
-      "time": new Date().getTime(),
-      "blocks": [
-        {
-            type: "header",
-            data: {
-                text: "write a header"
-            }
-        },
-      ]
+        "time": new Date().getTime(),
+        "blocks": [
+            {
+                type: "header",
+                data: {
+                    text: "write a header"
+                }
+            },
+        ]
     }
-  }
+}
 
-function Editor() {
+function Editor({ editorID }) {
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
     useEffect(() => {
         if (ejInstance.current === null) {
@@ -43,13 +44,14 @@ function Editor() {
     };
     const initializeEditor = () => {
         const editor = new EditorJS({
+            inlineToolbar: true,
             data: editorData,
             onChange: async () => {
-                let content = await this.editor.saver.save();
+                let content = await ejInstance.current.saver.save();
                 setEditorData(content);
-              },
+            },
             onReady: handleReady,
-            holder: 'editorjs',
+            holder: editorID,
             autofocus: true,
             onReady: () => {
                 ejInstance.current = editor;
@@ -74,7 +76,7 @@ function Editor() {
                 codeBox: {
                     class: CodeBox,
                     config: {
-                        themeURL: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css', 
+                        themeURL: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css',
                         useDefaultTheme: 'dark'
                     }
                 },
@@ -89,19 +91,24 @@ function Editor() {
                         messagePlaceholder: 'Enter something',
                     },
                 },
-
-                // linkTool: {
-                //     class: LinkTool,
-                //     config: {
-                //       endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching,
-                //     }
-                //   }
+                linkTool: {
+                    class: LinkTool,
+                    config: {
+                        endpoint: "http://localhost:3000/url/extractMetadata"
+                    }
+                }
 
             }
         });
     }
     const ejInstance = useRef();
-    return <><div id='editorjs' className="font-Manrope bg-[#242424]"></div></>;
+    return <>
+        <div id={editorID} className="font-Manrope bg-[#242424] rounded-xl mx-16 my-8" />
+        <button onClick={() => {
+            console.log(editorData);
+        }}> lolzz </button>
+
+    </>;
 
 }
 
