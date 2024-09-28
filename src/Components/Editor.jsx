@@ -9,8 +9,10 @@ import CodeBox from '@bomdi/codebox';
 import DragDrop from "editorjs-drag-drop";
 import Undo from 'editorjs-undo';
 import LinkTool from "@editorjs/link"
-import "./Editor.css"
+import ImageTool from '@editorjs/image';
 import Header from "title-editorjs";
+import "./Editor.css"
+
 
 const DEFAULT_INITIAL_DATA = () => {
     return {
@@ -94,7 +96,7 @@ function Editor({ editorID }) {
                 linkTool: {
                     class: LinkTool,
                     config: {
-                        endpoint: "http://localhost:3000/url/extractMetadata"
+                        endpoint: "http://localhost:3000/editorJS/extractMetadata"
                     }
                 }
 
