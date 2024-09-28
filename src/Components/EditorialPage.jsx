@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Editor from "./Editor";
 
 function EditorialPage() {
-    const [title, setTitle] = useState("Reverse a String");
+    const [title, setTitle] = useState("Your phone linging");
     const [explanation, setExplanation] = useState("");
     return (
         <div className="relative flex size-full min-h-screen flex-col m-4 overflow-x-hidden text-[#FFFFFF]">
@@ -12,13 +12,12 @@ function EditorialPage() {
                 </p>
             </div>
             <p className="text-lg">
-                Explain your solution
+                Ding dong
             </p>
             <div className="bg-[#242424] w-full flex-1 resize-none rounded-xl m-16">
             <Editor />
             </div>
             
-            <div><img src="https://images8.alphacoders.com/135/thumbbig-1355096.webp"/></div>
         </div>
     )
 }
